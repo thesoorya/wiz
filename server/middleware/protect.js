@@ -9,19 +9,18 @@ exports.protect = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.userId = decoded.userId;
+        req.user = decoded;
         next();
     } catch (error) {
-        console.error(error);
-        res.status(401).json({ success: false, message: 'Not authorized, token failed' });
+        console.error('Token verification error:', error.message);
+        return res.status(401).json({ success: false, message: 'Not authorized, invalid token' });
     }
 };
 
-exports.admin = async (req, res, next) => {
+exports.admin = (req, res, next) => {
     if (req.user && req.user.role === 'admin') {
-        next()
+        return next();
+    } else {
+        return res.status(403).json({ success: false, message: 'Access denied - Admin only' });
     }
-    else {
-        res.status(401).json({ success: false, message: 'Access denied - Admin only' });
-    }
-}
+};
