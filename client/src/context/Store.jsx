@@ -21,8 +21,36 @@ const Store = ({ children }) => {
             }
         } catch (error) {
             toast.error(error.response?.data?.message || 'An error occurred during signup.');
-        } finally {
-            setLoading(false);
+        }
+    };
+
+    const loginAuth = async (credentials) => {
+        setLoading(true);
+        try {
+            const response = await axios.post(`${baseURL}/auth/login`, credentials, { withCredentials: true });
+            if (response.data.success) {
+                setUser(response.data.user);
+                toast.success('Login successful!');
+            } else {
+                toast.error(response.data.message || 'Login failed!');
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'An error occurred during login.');
+        }
+    };
+
+    const logoutAuth = async (credentials) => {
+        setLoading(true);
+        try {
+            const response = await axios.post(`${baseURL}/auth/logout`, credentials, { withCredentials: true });
+            if (response.data.success) {
+                setUser(null);
+                toast.success('Logout successful!');
+            } else {
+                toast.error(response.data.message || 'Logout failed!');
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'An error occurred during logout.');
         }
     };
 
@@ -32,12 +60,11 @@ const Store = ({ children }) => {
             const response = await axios.get(`${baseURL}/auth/profile`, { withCredentials: true });
             if (response.data.success) {
                 setUser(response.data.user);
-                console.log(user)
             } else {
                 console.log(response.data.message || 'Failed to fetch profile!');
             }
         } catch (error) {
-            toast.error(error.response?.data?.message || 'An error occurred while fetching the profile.');
+            console.log(error.response.data.message);
         } finally {
             setLoading(false);
         }
@@ -49,6 +76,8 @@ const Store = ({ children }) => {
         setUser,
         loading,
         signupAuth,
+        loginAuth,
+        logoutAuth,
         getProfile,
     };
 
