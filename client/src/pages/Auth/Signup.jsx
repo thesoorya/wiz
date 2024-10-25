@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Auth.css";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/Store";
 import toast from "react-hot-toast";
 
@@ -11,6 +11,7 @@ const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
 
   const handleAuth = () => {
     if (username && email && password) {
@@ -18,6 +19,7 @@ const Signup = () => {
       setUsername('');
       setEmail('');
       setPassword('');
+      navigate('/')
     } else {
       toast.error("All fields are required!");
     }
@@ -72,7 +74,7 @@ const Signup = () => {
             {loading ? 'Signing up...' : 'Signup'}
           </button>
           <div className="auth_router">
-            Already have an account? <Link to={"/api/login"}>Login</Link>
+            Already have an account? <Link to={"/login"}>Login</Link>
           </div>
         </div>
       </div>

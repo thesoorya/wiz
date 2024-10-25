@@ -1,0 +1,28 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@200,201,300,301,400,401,500,501,600,601,700,701,1,2&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: 'General Sans', sans-serif;
+  min-height: 100vh;
+  color: #1d1814;
+  background-color: #fbfbfb;
+}
+h1, h2, h3, h4, h5, h6{
+  font-family: 'General Sans', sans-serif;
+  font-weight: 400;
+}
+h1{
+  font-size: 58px;
+}
+button{
+  font-family: 'General Sans', sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
