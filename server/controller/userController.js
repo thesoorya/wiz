@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
 
         generateToken(user._id, res);
 
-        res.status(201).json({ success: true, user: { username, email } });
+        res.status(200).json({ success: true, user: { username, email } });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Server error' });
