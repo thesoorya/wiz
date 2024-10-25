@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import "./Navbar.css";
+import { StoreContext } from "../../context/Store";
 
 const Navbar = () => {
   const [navItem, setNavItem] = useState(false);
   const [profileBtn, setProfileBtn] = useState(false);
+  const { user, logoutAuth } = useContext(StoreContext)
+
+  function handleLogout() {
+    logoutAuth()
+  }
 
   return (
     <div>
@@ -35,24 +41,13 @@ const Navbar = () => {
         >
           <p>S</p>
         </div>
-        <div
-          className={`profile_container ${
-            profileBtn ? "profile_container_open" : ""
-          }`}
-        >
-          <h1>Soorya</h1>
-          <p>Edit Profile </p>
-          <button>Logout</button>
-        </div>
       </div>
 
       {/*  */}
 
       <div
-        div
-        className={`nav_links_section ${
-          navItem ? "nav_links_section_open" : ""
-        }`}
+        className={`nav_links_section ${navItem ? "nav_links_section_open" : ""
+          }`}
       >
         <div
           className="nav_close_btn"
@@ -76,7 +71,11 @@ const Navbar = () => {
             <Link>Cart</Link>
           </div>
           <button className="nav_login_btn">
-            <Link>Sign Up</Link>
+            {
+              user ?
+                (<Link to="/" onClick={handleLogout}>Logout</Link>) :
+                (<Link to="/signup">Sign Up</Link>)
+            }
           </button>
         </div>
       </div>
